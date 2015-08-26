@@ -1,0 +1,43 @@
+Curve25519 for Javacard 3.0.x
+
+By David Oswald, d.f.oswald@cs.bham.ac.uk
+26 August 2015
+
+This code uses the excellent JC Ant task and the GP tool 
+for building and installation. These tools are written by
+Martin Paljak and are available under the MIT / LGPL license 
+(see the respective repositories for details).
+
+https://github.com/martinpaljak/ant-javacard
+https://github.com/martinpaljak/GlobalPlatformPro#license
+
+Some of this code is based on information or code from
+ 
+ - Sam Kerr: http://samuelkerr.com/?p=431 
+ - Eli Bendersky: http://eli.thegreenplace.net/2009/03/07/computing-modular-square-roots-in-python/ 
+ - http://cr.yp.to/highspeed/naclcrypto-20090310.pdf, page 7, by Matthew Dempsky
+ 
+The following license applies to all code in this project not covered by
+other licenses:
+
+=======================================================================
+
+This is free and unencumbered software released into the public domain.
+
+Anyone is free to copy, modify, publish, use, compile, sell, or
+distribute this software, either in source code form or as a compiled
+binary, for any purpose, commercial or non-commercial, and by any
+means.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+=======================================================================
+
+If this software is useful to you, I'd appreciate an attribution,
+contribution (e.g. bug fixes, improvements, ...), or a beer.
