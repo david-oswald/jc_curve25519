@@ -40,6 +40,7 @@ from smartcard.Exceptions import NoCardException
 from smartcard.System import *
 from smartcard.util import toHexString
 from struct import *
+from timeit import default_timer as timer
 
 class JCCurve25519:
     
@@ -303,8 +304,11 @@ class JCCurve25519:
         # Generate key APDU
         GENKEY = [0x00, 0x01, 0x0, 0x00, 0x00]
         
+        b = timer()
         response, sw1, sw2 = self.c.transmit(GENKEY)
-    
+        e = timer()
+        print "Execution time: " + str(e - b)     
+        
         if sw1 != 0x90 or sw2 != 0x00:
             raise Exception("Card error")
             return False
@@ -341,8 +345,11 @@ class JCCurve25519:
         
         # Generate key APDU
         SETKEY = [0x00, 0x02, 0x0, 0x00, 0x20] + sk
-        
+
+        b = timer()        
         response, sw1, sw2 = self.c.transmit(SETKEY)
+        e = timer()
+        print "Execution time: " + str(e - b)     
     
         if sw1 != 0x90 or sw2 != 0x00:
             raise Exception("Card error")
@@ -378,8 +385,11 @@ class JCCurve25519:
         pkCard = JCCurve25519.pack_be(pkW[0]) + JCCurve25519.pack_be(pkW[1])
         GENSECRET = [0x00, 0x03, 0x0, 0x00, 0x40] + pkCard
         
+        b = timer()
         response, sw1, sw2 = self.c.transmit(GENSECRET)
-    
+        e = timer()
+        print "Execution time: " + str(e - b)     
+        
         if sw1 != 0x90 or sw2 != 0x00:
             raise Exception("Card error")
             return False
