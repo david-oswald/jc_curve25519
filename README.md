@@ -75,3 +75,8 @@ Thanks to Peter Schwabe for his helpful comments and suggestions and to Shaima A
 
 ## License
 Public domain, see LICENSE
+
+## Useful links
+* https://docs.oracle.com/javacard/3.0.5/api/index.html
+* https://github.com/martinpaljak
+* http://samuelkerr.com/?p=431 
