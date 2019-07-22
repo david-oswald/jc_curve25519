@@ -18,13 +18,13 @@
     <!-- <taskdef name="javacard" classname="pro.javacard.ant.JavaCard" classpath="lib/ant-javacard.jar"/> -->
   </target>
   
-  <property name="JC303" value="../jc303" />
-  
+  <property name="JC304" value="ext/jc304_kit/"/>
+
   <!-- Build test applets -->
   <target name="curve" depends="jcpro">
     <javacard>
-	   <cap jckit="${JC303}" output="curve25519_jc303.cap" sources="src/curve25519">
-        <applet class="curve25519.Curve25519Test" aid="0102030405060708"/>
+	   <cap jckit="${JC304}" output="curve25519.cap" sources="src/curve25519">
+        <applet class="curve25519.Curve25519Test" aid="c1c2c3c4c5c6c7c8"/>
       </cap>
     </javacard>
   </target>
