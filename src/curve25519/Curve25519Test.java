@@ -58,8 +58,9 @@ public class Curve25519Test extends Applet
     private static final short VERSION_NUMBER = (short)0x5519;
     
 	// Bit length of prime field, this is important to get right (i.e. 256 will not work)
+	// PetrS: some cards fails when 255 length is used, but works correctly with 256 as well
     private static final short keyLength = 255;
-	 
+
 	// Curve25519 Weierstrass parameters
 	//
 	// most values from http://samuelkerr.com/?p=431 (though some bugs in the
@@ -126,7 +127,7 @@ public class Curve25519Test extends Applet
 		outBuffer = JCSystem.makeTransientByteArray((short) 32, JCSystem.CLEAR_ON_DESELECT);
 		skBuffer = JCSystem.makeTransientByteArray((short) 32, JCSystem.CLEAR_ON_DESELECT);
 		keyAgreement = KeyAgreement.getInstance(KeyAgreement.ALG_EC_SVDP_DH_PLAIN, false);
-		
+
 		ecPrivateKey = (ECPrivateKey)KeyBuilder.buildKey(KeyBuilder.TYPE_EC_FP_PRIVATE, keyLength, false);
 		ecPublicKey = (ECPublicKey)KeyBuilder.buildKey(KeyBuilder.TYPE_EC_FP_PUBLIC, keyLength, false);
     }

@@ -437,9 +437,7 @@ def main():
 
     skN = JCCurve25519.clamp(skN)
 
-    # BUGBUG: enable
     pkTest = JCCurve25519.smul(skN, 9)
-    #pkTest = pkN
 
     print('\n')
     print("== Testing against test vector == ")
