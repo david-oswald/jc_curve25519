@@ -58,8 +58,9 @@ public class Curve25519Test extends Applet
     private static final short VERSION_NUMBER = (short)0x5519;
     
 	// Bit length of prime field, this is important to get right (i.e. 256 will not work)
+	// PetrS: some cards fails when 255 length is used, but works correctly with 256 as well
     private static final short keyLength = 255;
-	 
+
 	// Curve25519 Weierstrass parameters
 	//
 	// most values from http://samuelkerr.com/?p=431 (though some bugs in the
@@ -126,7 +127,7 @@ public class Curve25519Test extends Applet
 		outBuffer = JCSystem.makeTransientByteArray((short) 32, JCSystem.CLEAR_ON_DESELECT);
 		skBuffer = JCSystem.makeTransientByteArray((short) 32, JCSystem.CLEAR_ON_DESELECT);
 		keyAgreement = KeyAgreement.getInstance(KeyAgreement.ALG_EC_SVDP_DH_PLAIN, false);
-		
+
 		ecPrivateKey = (ECPrivateKey)KeyBuilder.buildKey(KeyBuilder.TYPE_EC_FP_PRIVATE, keyLength, false);
 		ecPublicKey = (ECPublicKey)KeyBuilder.buildKey(KeyBuilder.TYPE_EC_FP_PUBLIC, keyLength, false);
     }
@@ -162,12 +163,12 @@ public class Curve25519Test extends Applet
 		short code = 0;
 		
 		try {
-			// Setup paramters
-			
+
+			// Setup parameters
 			// Prime field
 			ecPrivateKey.setFieldFP(p256, (short)0, (short)p256.length);
 			ecPublicKey.setFieldFP(p256, (short)0, (short)p256.length);
-			
+
 			// A coefficient
 			ecPrivateKey.setA(a256, (short)0, (short)a256.length);
 			ecPublicKey.setA(a256, (short)0, (short)a256.length);
@@ -175,20 +176,21 @@ public class Curve25519Test extends Applet
 			// B coefficient
 			ecPrivateKey.setB(b256, (short)0, (short)b256.length);
 			ecPublicKey.setB(b256, (short)0, (short)b256.length);
-			
+
 			// base point G
 			ecPrivateKey.setG(g256, (short)0, (short)g256.length);
 			ecPublicKey.setG(g256, (short)0, (short)g256.length);
-			
+
 			// order of G
 			ecPrivateKey.setR(r256, (short)0, (short)32);
 			ecPublicKey.setR(r256, (short)0, (short)32);
-			
+/* BUGBUG: if not commented, this will emit CryptoException.ILLEGAL_VALUE
 			// Note: most cards ignore cofactor internally
 			ecPrivateKey.setK(k);
 			ecPublicKey.setK(k);
+/**/
 		}
-		catch (CryptoException e)      
+		catch (CryptoException e)
 		{code = e.getReason();}
 		catch (Exception e)                
 		{code = (short)0xEEEE;}
@@ -229,12 +231,14 @@ public class Curve25519Test extends Applet
 
 				// Shift by 3 (the three remaining double operations are done on the PC side)
 				shift_array_right_by_3(skBuffer);
-				
+
+
 				code = initKeys();
 
 				if(code == 0)
 				{
-					try 
+
+					try
 					{
 						// Set (scalar >> 3)
 						ecPrivateKey.setS(skBuffer, (short)0, (short)skBuffer.length);
@@ -246,7 +250,7 @@ public class Curve25519Test extends Applet
 						// Compute the corresponding public key
 						keyAgreement.init(ecPrivateKey); 
 						short len = keyAgreement.generateSecret(g256, (short)0, (short)g256.length, buf, (short)32);
-						
+
 						apdu.setOutgoingAndSend((short) 0, (short)64);
 					} 
 					catch (CryptoException e)      
