@@ -62,11 +62,13 @@ Using Python, execute jc_curve25519.py. Requires pyScard to communicate with car
 	diff = 0x0L
 
 ## Execution times
-I measured the following execution times on a J2D081 smartcard using timeit.default_timer. These timings include the communication overhead for sending and receiving data, but not the post-processing in Python:
+The execution times are measured using timeit.default_timer. These timings include the communication overhead for sending and receiving data, but not the post-processing in Python:
 
-	On-card key generation (generate 32 random bytes, perform one ECC operation): 624 ms
-	Set private key (perform one ECC operation): 618 ms
-	Generate shared secret (perform one ECC operation with pre-set private key): 122 ms
+| Operation | NXP J2D081 contact | NXP J3H145 contact | NXP JCOP4 J3R180 contact | 
+| ------------- |-------------:| -----:| -------------:|
+| On-card key generation (generate 32 random bytes, perform one ECC operation)   | 624 ms | 272 ms  | 121 ms |
+| Set private key (perform one ECC operation)     |  618 ms |  255 ms | 92 ms | 
+| Generate shared secret (perform one ECC operation with pre-set private key)    | 122 ms |  77  ms | 39 ms |
 	
 The timings are very consistent over multiple executions.
 	
