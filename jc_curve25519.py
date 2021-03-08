@@ -289,14 +289,21 @@ class JCCurve25519:
         if len(rl) == 0:
             raise Exception("No readers available")
 
-        print(" Connecting to first reader ... ")
+        print(" Connecting to a first reader with a card ... ")
+        usable_card_found = False
+        for r in rl:
+            try:
+                self.c = r.createConnection()
+                self.c.connect()  # try to connect
+                print(" ATR: " + toHexString(self.c.getATR()))
+                usable_card_found = True
+                break  # we found it, stop searching
+            # if no card is found, NoCardException is emmit, but capture broadly for other reader-related errors
+            except Exception:
+               continue  # try next reader
 
-        try:
-            self.c = r.createConnection()
-            self.c.connect()
-            print(" ATR: " + toHexString(self.c.getATR()))
-        except Exception:
-            raise Exception("Communication error")
+        if not usable_card_found:
+            raise Exception("No reader with card was found")
 
         # select app
         # SELECT = [0x00, 0xA4, 0x04, 0x00, 0x08, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08]
